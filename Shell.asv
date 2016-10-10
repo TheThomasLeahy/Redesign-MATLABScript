@@ -24,6 +24,9 @@ for i = 1:length(files)
         x = x + 1;
     end
 end
+
+%Get rid of DS_Strore (TOMMY)
+
 files = theseFiles;
 
 
@@ -46,7 +49,6 @@ for i = 1:length(files)
     Assymetry = CalcAssymetry(BorderXY, ImageBorder, Area);
     
     %Calc Color Variation
-
     ColorVariation = CalcColorVariation(Image, BorderXY, ImageBorder);
 end
 
@@ -54,4 +56,25 @@ end
 
 %Compare values from image to image
 %Create size contour map
+
+%Generate Time-Lapse Data
+
+
+%Generate Plots
+
+%Area (MAHY)
+    %Output and Plot Area over Time (Image Number)
+    %Output and Plot Change in Area over Time
+    %Relation to what is bad
+    
+%Asymmetry
+    %Output and Plots metrics over Time (Image Number)
+    %Relation to what is bad
+    
+%Color Variation
+    %Plot 
+    
+
+
+
 
