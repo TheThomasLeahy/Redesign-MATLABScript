@@ -35,8 +35,7 @@ files = theseFiles;
 %For each image:
 for i = 1:length(files)
     %Load Image
-    Image = imread(files(i).name);
-    
+    Image = imread(files(i).name);   
     %Border Detection
     [BorderXY, ImageBorder] = BorderDetection(Image);
     BorderXY = BorderXY{1};
@@ -53,26 +52,28 @@ for i = 1:length(files)
 end
 
 %% Time-Lapse
+%Generate Time-Lapse Data and Generate Plots
 
-%Compare values from image to image
-%Create size contour map
-
-%Generate Time-Lapse Data
-
-
-%Generate Plots
-
+%Border Change over time/Contour Map (Kristen)
+contour(BorderXY_1(:,1), BorderXY_2(:,2));
+hold on
+if length(files)>1  
+for i=2:length(files)
+    z = num2str(i);
+    contour(BorderXY_z(:,1), BorderXY_z(:,2));
+end 
+end 
 %Area (MAHY)
     %Output and Plot Area over Time (Image Number)
     %Output and Plot Change in Area over Time
     %Relation to what is bad
     
-%Asymmetry
+%Asymmetry (TOM)
     %Output and Plots metrics over Time (Image Number)
     %Relation to what is bad
     
-%Color Variation
-    %Plot 
+%Color Variation (Kristen)
+    %Finding changes between Images, etc.  
     
 
 

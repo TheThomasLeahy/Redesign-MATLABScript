@@ -35,12 +35,15 @@ files = theseFiles;
 %For each image:
 for i = 1:length(files)
     %Load Image
-    Image = imread(files(i).name);
-    
+    Image = imread(files(i).name);   
     %Border Detection
     [BorderXY, ImageBorder] = BorderDetection(Image);
     BorderXY = BorderXY{1};
     BorderXY = [BorderXY(:,2) BorderXY(:,1)]; %Making it XY points
+    plot(BorderXY(:,1) ,BorderXY(:,2));
+    hold on;
+    figure;
+    title('Border Outline');
     
     %Calc Size
     Area =  CalcSize(BorderXY, ImageBorder);
@@ -56,7 +59,14 @@ end
 %Generate Time-Lapse Data and Generate Plots
 
 %Border Change over time/Contour Map (Kristen)
-
+contour(BorderXY(:,1), BorderXY(:,2));
+hold on
+if length(files)>1  
+for i=2:length(files)
+    z = num2str(i);
+    contour(BorderXY_z(:,1), BorderXY_z(:,2));
+end 
+end 
 %Area (MAHY)
     %Output and Plot Area over Time (Image Number)
     %Output and Plot Change in Area over Time
