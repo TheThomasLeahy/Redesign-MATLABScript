@@ -2,9 +2,7 @@ function [ColorVar] = CalcColorVariation(Image, BorderXY, ImageBorder)
 %Code by Laura Kenyon and Kristen Hagan 
 
 clc;
-
 %output simple colormap 
-
 imagesc(Image)
 colorbar
 title('ColorMap of Image');
