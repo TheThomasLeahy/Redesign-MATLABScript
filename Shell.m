@@ -36,6 +36,7 @@ files = theseFiles;
 %For each image:
 for i = 1:length(files)
     
+    
     %Load Image
     Image = imread(files(i).name);   
     
