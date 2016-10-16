@@ -47,6 +47,7 @@ for i = 1:length(files)
     %Border-Thining
     BorderXY = BorderThining(BorderXY);
     
+    
     %Generate Border Contour
     plot(BorderXY(:,1) ,BorderXY(:,2));
     hold on;
@@ -75,6 +76,7 @@ for i=2:length(files)
     contour(BorderXY_z(:,1), BorderXY_z(:,2));
 end 
 end 
+
 %Area (MAHY)
     %Output and Plot Area over Time (Image Number)
     %Output and Plot Change in Area over Time
@@ -83,6 +85,8 @@ end
 %Asymmetry (TOM)
     %Output and Plots metrics over Time (Image Number)
     %Relation to what is bad
+    
+
     
 %Color Variation (Kristen)
     %Finding changes between Images, etc.  
