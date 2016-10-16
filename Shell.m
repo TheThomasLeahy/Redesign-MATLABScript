@@ -27,6 +27,7 @@ end
 
 %Get rid of DS_Strore (TOMMY)
 
+
 files = theseFiles;
 
 
@@ -34,12 +35,19 @@ files = theseFiles;
 
 %For each image:
 for i = 1:length(files)
+    
     %Load Image
     Image = imread(files(i).name);   
+    
     %Border Detection
     [BorderXY, ImageBorder] = BorderDetection(Image);
     BorderXY = BorderXY{1};
     BorderXY = [BorderXY(:,2) BorderXY(:,1)]; %Making it XY points
+    
+    %Border-Thining
+    BorderXY = BorderThining(BorderXY);
+    
+    %Generate Border Contour
     plot(BorderXY(:,1) ,BorderXY(:,2));
     hold on;
     figure;

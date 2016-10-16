@@ -11,7 +11,11 @@ function [ Circ ] = CalcAssymetry(BorderXY, ImageBorder, Area)
 Perimeter = length(BorderXY);
 Circ = (4*pi*Area)/(Perimeter^2);
 
+%{
+
 %% SD Method
+
+%Symmetry Transform
 
 
 
@@ -30,6 +34,8 @@ for i = 1:length(BorderXY)
     %Did we find a new furthest point?
     
 end
+
+%}
 
 end
 
