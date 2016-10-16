@@ -67,14 +67,14 @@ end
 %Generate Time-Lapse Data and Generate Plots
 
 %Border Change over time/Contour Map (Kristen)
-contour(BorderXY(:,1), BorderXY(:,2));
-hold on
-if length(files)>1  
-for i=2:length(files)
-    z = num2str(i);
-    contour(BorderXY_z(:,1), BorderXY_z(:,2));
-end 
-end 
+% contour(BorderXY(:,1), BorderXY(:,2));
+% hold on
+% if length(files)>1  
+% for i=2:length(files)
+%     z = num2str(i);
+%     contour(BorderXY_z(:,1), BorderXY_z(:,2));
+% end 
+% end 
 %Area (MAHY)
     %Output and Plot Area over Time (Image Number)
     %Output and Plot Change in Area over Time
@@ -86,8 +86,14 @@ end
     
 %Color Variation (Kristen)
     %Finding changes between Images, etc.  
+    ssimval= zeros(1,length(files)-1);
     
-
-
+    for i = 2:length(files)
+    x = num2str('i');
+    filename = imread(files(i).name); 
+    prevname = imread(files(i-1).name);
+    ssimval(i-1) = ssim(filename,prevname);
+    end 
+    
 
 
