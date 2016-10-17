@@ -82,7 +82,11 @@ end
 %% Time-Lapse
 %Generate Time-Lapse Data and Generate Plots
 
+%If you want to get something (for ex, the area) from the ith image,
+%address it like this "thisarea = dataArray(i).Area;"
+
 %Border Change over time/Contour Map (Kristen)
+%What is pink black or whatever
 contour(BorderXY(:,1), BorderXY(:,2));
 hold on
 if length(files)>1  
