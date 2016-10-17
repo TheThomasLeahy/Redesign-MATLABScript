@@ -93,6 +93,25 @@ end
 end 
 
 %Area (MAHY)
+knownAreas = [83192 89335 96728 100465 111878];
+d_knownAreas  = diff(knownAreas);
+moleArea = {};
+for i=1:length(files);
+    currentArea = CalcSize(BorderXY,ImageBorder);   %are we storing these somewhere aka do I need to recalculate
+    moleArea{end+1}=currentArea;
+end
+area = cell2mat(moleArea);
+d_area = diff(area);
+subplot(1,1,1);
+hold on;
+plot(knownAreas);
+plot(areas);
+hold off;
+subplot(1,2,2);
+hold on;
+plot(d_knownArea);
+plot(d_areas);
+hold off;
     %Output and Plot Area over Time (Image Number)
     %Output and Plot Change in Area over Time
     %Relation to what is bad
