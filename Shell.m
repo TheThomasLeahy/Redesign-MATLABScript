@@ -20,12 +20,13 @@ fileIndex = find(~[files.isdir]);
 x = 1;
 for i = 1:length(files)
     if files(i).bytes ~= 0
-        theseFiles(x) = files(i);
-        x = x + 1;
+        if ~strcmp(files(i).name, '.DS_Store')
+            theseFiles(x) = files(i);
+            x = x + 1;
+        end
     end
 end
 
-%Get rid of DS_Strore (TOMMY)
 
 
 files = theseFiles;
@@ -45,7 +46,7 @@ dataArray = struct(field1,value1,field2,value2,field3,value3,field4,value4, fiel
 %For each image:
 for i = 1:length(files)
     %Load Image
-    Image = imread(files(i).name);   
+    Image = imread(files(i).name);
     
     %Border Detection
     [BorderXY, ImageBorder] = BorderDetection(Image);
@@ -89,12 +90,12 @@ end
 %What is pink black or whatever
 contour(BorderXY(:,1), BorderXY(:,2));
 hold on
-if length(files)>1  
-for i=2:length(files)
-    z = num2str(i);
-    contour(BorderXY_z(:,1), BorderXY_z(:,2));
-end 
-end 
+if length(files)>1
+    for i=2:length(files)
+        z = num2str(i);
+        contour(BorderXY_z(:,1), BorderXY_z(:,2));
+    end
+end
 
 %Area (MAHY)
 knownAreas = [83192 89335 96728 100465 111878];
@@ -118,19 +119,19 @@ plot(d_knownArea);
 plot(d_areas);
 hold off;
 %Relation to what is bad
-    
+
 %Asymmetry (TOM)
-    %Output and Plots metrics over Time (Image Number)
-    %Relation to what is bad
-    
+%Output and Plots metrics over Time (Image Number)
+%Relation to what is bad
 
-    
+
+
 %Color Variation (Kristen)
-    %Finding changes between Images, etc.  
-    
+%Finding changes between Images, etc.
 
-    
-    
+
+
+
 
 
 
