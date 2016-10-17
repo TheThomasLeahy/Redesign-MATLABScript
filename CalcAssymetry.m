@@ -11,6 +11,9 @@ function [ Circ ] = CalcAssymetry(BorderXY, ImageBorder, Area)
 Perimeter = length(BorderXY);
 Circ = (4*pi*Area)/(Perimeter^2);
 
+%% Fit to elipse and find change in area
+
+
 
 %% SD Method
 
@@ -44,6 +47,7 @@ for theta = 0:179
             d = abs(det([Q2-Q1;P-Q1]))/abs(Q2-Q1);
         end
     end
+    
     
     
 end
