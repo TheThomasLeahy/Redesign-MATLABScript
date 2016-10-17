@@ -3,7 +3,8 @@ function [ Circ ] = CalcAssymetry(BorderXY, ImageBorder, Area)
 %Quanitifies the assymetry of the image
 %Ideas/Algorithms taken from the following paper:
 %"Determining the asymmetry of skin lesion with fuzzy borders" (See UT Box)
-
+Circ = 5;
+return;
 %% Find CIRC
 
 % CIRC is 1 if the lesion is symmetrical or greater than 1 if it is

@@ -32,11 +32,18 @@ files = theseFiles;
 
 
 %% Assess each image
+%Data Array
+field1 = 'Image';  value1 = [];
+field2 = 'BorderXY';  value2 = [];
+field3 = 'ImageBorder';  value3 = [];
+field4 = 'Area';  value4 = [];
+field5 = 'Asymmetry'; value5 = [];
+field6 = 'ColorVariation'; value6 = [];
+
+dataArray = struct(field1,value1,field2,value2,field3,value3,field4,value4, field5, field6);
 
 %For each image:
 for i = 1:length(files)
-    
-    
     %Load Image
     Image = imread(files(i).name);   
     
@@ -48,7 +55,6 @@ for i = 1:length(files)
     %Border-Thining
     BorderXY = BorderThining(BorderXY);
     
-    
     %Generate Border Contour
     plot(BorderXY(:,1) ,BorderXY(:,2));
     hold on;
@@ -59,10 +65,18 @@ for i = 1:length(files)
     Area =  CalcSize(BorderXY, ImageBorder);
     
     %Calc Assymetry
-    Assymetry = CalcAssymetry(BorderXY, ImageBorder, Area);
+    Asymmetry = CalcAssymetry(BorderXY, ImageBorder, Area);
     
     %Calc Color Variation
     ColorVariation = CalcColorVariation(Image, BorderXY, ImageBorder);
+    
+    %Data Storage
+    dataArray(i).Image = Image;
+    dataArray(i).BorderXY = BorderXY;
+    dataArray(i).ImageBorder = ImageBorder;
+    dataArray(i).Area = Area;
+    dataArray(i).Asymmetry = Asymmetry;
+    dataArray(i).ColorVariation = ColorVariation;
 end
 
 %% Time-Lapse

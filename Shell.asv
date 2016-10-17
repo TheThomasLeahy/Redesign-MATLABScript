@@ -27,19 +27,39 @@ end
 
 %Get rid of DS_Strore (TOMMY)
 
+
 files = theseFiles;
 
 
 %% Assess each image
+%Data Array
+field1 = 'Image';  value1 = [];
+field2 = 'BorderXY';  value2 = [];
+field3 = 'ImageBorder';  value3 = [];
+field4 = 'Area';  value4 = [];
+field5 = 'Asymmetry'; value5 = [];
+field6 = 'ColorVariation'; value6 = [];
+
+dataArray = struct(field1,value1,field2,value2,field3,value3,field4,value4, field5, field6);
 
 %For each image:
 for i = 1:length(files)
     %Load Image
     Image = imread(files(i).name);   
+    
     %Border Detection
     [BorderXY, ImageBorder] = BorderDetection(Image);
     BorderXY = BorderXY{1};
     BorderXY = [BorderXY(:,2) BorderXY(:,1)]; %Making it XY points
+    
+    %Border-Thining
+    BorderXY = BorderThining(BorderXY);
+    
+    %Generate Border Contour
+    plot(BorderXY(:,1) ,BorderXY(:,2));
+    hold on;
+    figure;
+    title('Border Outline');
     
     %Calc Size
     Area =  CalcSize(BorderXY, ImageBorder);
@@ -49,13 +69,20 @@ for i = 1:length(files)
     
     %Calc Color Variation
     ColorVariation = CalcColorVariation(Image, BorderXY, ImageBorder);
+    
+    %Data Storage
+    dataArray(i).Image = Image;
+    dataArray(i).BorderXY = BorderXY;
+    dataArray(i).
+    
+    
 end
 
 %% Time-Lapse
 %Generate Time-Lapse Data and Generate Plots
 
 %Border Change over time/Contour Map (Kristen)
-contour(BorderXY_1(:,1), BorderXY_2(:,2));
+contour(BorderXY(:,1), BorderXY(:,2));
 hold on
 if length(files)>1  
 for i=2:length(files)
@@ -63,6 +90,7 @@ for i=2:length(files)
     contour(BorderXY_z(:,1), BorderXY_z(:,2));
 end 
 end 
+
 %Area (MAHY)
     %Output and Plot Area over Time (Image Number)
     %Output and Plot Change in Area over Time
@@ -71,6 +99,8 @@ end
 %Asymmetry (TOM)
     %Output and Plots metrics over Time (Image Number)
     %Relation to what is bad
+    
+
     
 %Color Variation (Kristen)
     %Finding changes between Images, etc.  
