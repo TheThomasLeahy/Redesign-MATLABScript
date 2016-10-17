@@ -1,10 +1,9 @@
-function [ Circ ] = CalcAssymetry(BorderXY, ImageBorder, Area)
+function [ Circ, percent ] = CalcAssymetry(BorderXY, ImageBorder, Area)
 %Code by Thomas Leahy
 %Quanitifies the assymetry of the image
 %Ideas/Algorithms taken from the following paper:
 %"Determining the asymmetry of skin lesion with fuzzy borders" (See UT Box)
-Circ = 5;
-return;
+
 %% Find CIRC
 
 % CIRC is 1 if the lesion is symmetrical or greater than 1 if it is
@@ -26,7 +25,8 @@ xCent = mean(BorderXY(:,1));
 yCent = mean(BorderXY(:,2));
 xCent = round(xCent);
 yCent = round(yCent);
-
+tote = zeros(1,179);
+match = zeros(1,179);
 for theta = 0:179
     %Find the line of sym
     xPoints = size(ImageBorder,1);
@@ -46,12 +46,34 @@ for theta = 0:179
         for j = 1:size(ImageBorder,2)
             P = [i j];
             d = abs(det([Q2-Q1;P-Q1]))/abs(Q2-Q1);
+            
+            %Is this xy point above or below the symmetry line
+            %We'll only consider points that are above it
+            ind = find(xPoints == i);
+            if(j >= yPoints(ind))
+                %Above the line, consider this value
+                %Find opposite of line of sym point
+                dx = round(d*sind(theta-90));
+                dy = round(d*cosd(theta-90));
+                xNew = i-(2*dx);
+                yNew = i+(2*dy);
+                %Check if this point is still on the picture
+                if((xNew>=1) && (yNew<= size(ImageBorder,2)))
+                    tote(theta) = tote(theta) + 1;
+                    %Is this new point a match?
+                    if ImageBorder(i,j) == ImageBorder(xNew, yNew)
+                        %MATCH!
+                        match(theta) = match(theta) + 1;
+                    end
+                end
+            end
+
         end
     end
-    
-    
-    
 end
+
+percent = (match./tote)*100;
+
 
 end
 

@@ -26,9 +26,6 @@ for i = 1:length(files)
         end
     end
 end
-
-
-
 files = theseFiles;
 
 
