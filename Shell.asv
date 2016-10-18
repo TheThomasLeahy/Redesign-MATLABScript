@@ -35,11 +35,15 @@ field1 = 'Image';  value1 = [];
 field2 = 'BorderXY';  value2 = [];
 field3 = 'ImageBorder';  value3 = [];
 field4 = 'Area';  value4 = [];
-field5 = 'Asymmetry'; value5 = [];
-field6 = 'ColorVariation'; value6 = [];
-field7 = 'ConversionFactor'; value7 = []; 
+field5 = 'Circ'; value5 = [];
+field6 = 'maxPercentOverlap'; value6 = [];
+field7 = 'deltaPerimeter'; value7 = [];
+field8 = 'ColorVariation'; value8 = [];
+field9 = 'ConversionFactor'; value9 = []; 
 
-dataArray = struct(field1,value1,field2,value2,field3,value3,field4,value4, field5, field6,field7,value7);
+dataArray = struct(field1,value1,field2,value2,field3,value3,field4,...
+    value4, field5, value5, field6,value6,field7,value7,...
+    field8, value8, field9, value9);
 
 %For each image:
 for i = 1:length(files)
@@ -47,7 +51,7 @@ for i = 1:length(files)
     Image = imread(files(i).name);
     
     %Border Detection
-    [BorderXY, ImageBorder, PixelToMM] = BorderDetection(Image);
+    [BorderXY, ImageBorder, ConversionFactor] = BorderDetection(Image);
     BorderXY = BorderXY{1};
     BorderXY = [BorderXY(:,2) BorderXY(:,1)]; %Making it XY points
     ConversionFactor = PixelToMM;
@@ -64,7 +68,7 @@ for i = 1:length(files)
     Area =  CalcSize(BorderXY, ImageBorder);
     
     %Calc Assymetry
-    [Circ, Asymmetry = CalcAssymetry(BorderXY, ImageBorder, Area);
+    [Circ, maxPercentOverlap, deltaPerimeter] = CalcAssymetry(BorderXY, ImageBorder, Area);
     
     %Calc Color Variation
     ColorVariation = CalcColorVariation(Image, BorderXY, ImageBorder);
@@ -74,7 +78,9 @@ for i = 1:length(files)
     dataArray(i).BorderXY = BorderXY;
     dataArray(i).ImageBorder = ImageBorder;
     dataArray(i).Area = Area;
-    dataArray(i).Asymmetry = Asymmetry;
+    dataArray(i).Circ =Circ;
+    dataArray(i).maxPercentOverlap = maxPercentOverlap;
+    
     dataArray(i).ColorVariation = ColorVariation;
 end
 
@@ -130,6 +136,6 @@ hold off;
 
 
 
-
+%Generate Table here (
 
 

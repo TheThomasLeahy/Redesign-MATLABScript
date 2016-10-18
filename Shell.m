@@ -78,7 +78,10 @@ for i = 1:length(files)
     dataArray(i).BorderXY = BorderXY;
     dataArray(i).ImageBorder = ImageBorder;
     dataArray(i).Area = Area;
-    dataArray(i).Asymmetry =;
+    dataArray(i).Circ =Circ;
+    dataArray(i).maxPercentOverlap = maxPercentOverlap;
+    dataArray(i).deltaPerimeter = deltaPerimeter;
+    dataArray(i).ColorVariation = ColorVariation;
     dataArray(i).ColorVariation = ColorVariation;
 end
 
@@ -134,6 +137,6 @@ hold off;
 
 
 
-
+%Generate Table here (
 
 
