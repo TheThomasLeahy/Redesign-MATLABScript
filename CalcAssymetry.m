@@ -1,4 +1,4 @@
-function [ Circ, percent ] = CalcAssymetry(BorderXY, ImageBorder, Area)
+function [ Circ, maxPercentOverlap ] = CalcAssymetry(BorderXY, ImageBorder, Area)
 %Code by Thomas Leahy
 %Quanitifies the assymetry of the image
 %Ideas/Algorithms taken from the following paper:
@@ -67,9 +67,10 @@ for theta = 0:179
 end
 
 percent = (match./tote)*100;
+percent = max(percent);
 
 
-%% Fit to elipse and find change in area
+%% Fit to elipse and find change in perimeter
 
 %Find major axes and minor axes length
 

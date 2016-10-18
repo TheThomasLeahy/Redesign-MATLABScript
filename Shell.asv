@@ -64,7 +64,7 @@ for i = 1:length(files)
     Area =  CalcSize(BorderXY, ImageBorder);
     
     %Calc Assymetry
-   % Asymmetry = CalcAssymetry(BorderXY, ImageBorder, Area);
+    [Circ, Asymmetry = CalcAssymetry(BorderXY, ImageBorder, Area);
     
     %Calc Color Variation
     ColorVariation = CalcColorVariation(Image, BorderXY, ImageBorder);
