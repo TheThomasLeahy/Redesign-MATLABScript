@@ -37,8 +37,9 @@ field3 = 'ImageBorder';  value3 = [];
 field4 = 'Area';  value4 = [];
 field5 = 'Asymmetry'; value5 = [];
 field6 = 'ColorVariation'; value6 = [];
+field7 = 'ConversionFactor'; value7 = []; 
 
-dataArray = struct(field1,value1,field2,value2,field3,value3,field4,value4, field5, field6);
+dataArray = struct(field1,value1,field2,value2,field3,value3,field4,value4, field5, field6,field7,value7);
 
 %For each image:
 for i = 1:length(files)
@@ -46,9 +47,10 @@ for i = 1:length(files)
     Image = imread(files(i).name);
     
     %Border Detection
-    [BorderXY, ImageBorder] = BorderDetection(Image);
+    [BorderXY, ImageBorder, PixelToMM] = BorderDetection(Image);
     BorderXY = BorderXY{1};
     BorderXY = [BorderXY(:,2) BorderXY(:,1)]; %Making it XY points
+    ConversionFactor = PixelToMM;
     
     %Border-Thining
     BorderXY = BorderThining(BorderXY);
@@ -99,7 +101,7 @@ knownAreas = [83192 89335 96728 100465 111878];
 d_knownAreas  = diff(knownAreas);
 moleArea = {};
 for i=1:length(files);
-    moleArea{end+1}=dataArray(i).Area;
+    moleArea{end+1}=dataArray(i).Area / (dataArray(i).ConversionFactor)^2;  %is this right?
 end
 area = cell2mat(moleArea);
 d_area = diff(area);
