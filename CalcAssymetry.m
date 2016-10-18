@@ -4,21 +4,15 @@ function [ Circ, percent ] = CalcAssymetry(BorderXY, ImageBorder, Area)
 %Ideas/Algorithms taken from the following paper:
 %"Determining the asymmetry of skin lesion with fuzzy borders" (See UT Box)
 
-%% Find CIRC
+%% Find CIRC - How close to circular
 
-% CIRC is 1 if the lesion is symmetrical or greater than 1 if it is
-% elliptical
+% CIRC is 1 if the lesion is perfectly circular
+% Greater than 1 if eliptical
+% Less than 1 if extremely jagged edges
 Perimeter = length(BorderXY);
 Circ = (4*pi*Area)/(Perimeter^2);
 
-%% Fit to elipse and find change in area
-
-
-
-%% SD Method
-
-
-%% Will's Method
+%% Testing for symmetry around different planes of symmetry
 
 %Find Centroid
 xCent = mean(BorderXY(:,1));
@@ -73,6 +67,21 @@ for theta = 0:179
 end
 
 percent = (match./tote)*100;
+
+
+%% Fit to elipse and find change in area
+
+%Find major axes and minor axes length
+
+[Mlength, mlength] = regionprops(ImageBorder,'MajorAxisLength','MinorAxisLength');
+
+Majrad = Mlength/2;
+minrad = mlength/2;
+
+denom = ((Majrad+minrad)^2)*(sqrt(-3*(((Majrad-minrad)^2)/((Majrad+minrad)^2))+4)+10);
+EPerim = pi*(Majrad+minrad)*(((3*((Majrad-minrad)^2))/denom)+1);
+
+jEdges = Perimeter/EPerim; %Greater than 1 if jagged edges. 1 if perfect elipse
 
 
 end
