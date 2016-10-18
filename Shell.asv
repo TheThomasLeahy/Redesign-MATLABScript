@@ -48,7 +48,11 @@ dataArray = struct(field1,value1,field2,value2,field3,value3,field4,...
 %For each image:
 for i = 1:length(files)
     %Load Image
-    Image = imread(files(i).name);
+    [Image,colorMap] = imread(files(i).name);
+    
+    %Cropping
+    [ruler,ru = imcrop(Image,colorMap);
+    
     
     %Border Detection
     [BorderXY, ImageBorder, ConversionFactor] = BorderDetection(Image);
@@ -80,7 +84,8 @@ for i = 1:length(files)
     dataArray(i).Area = Area;
     dataArray(i).Circ =Circ;
     dataArray(i).maxPercentOverlap = maxPercentOverlap;
-    
+    dataArray(i).deltaPerimeter = deltaPerimeter;
+    dataArray(i).ConversionFactor = ConversionFactor;
     dataArray(i).ColorVariation = ColorVariation;
 end
 

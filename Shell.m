@@ -48,13 +48,16 @@ dataArray = struct(field1,value1,field2,value2,field3,value3,field4,...
 %For each image:
 for i = 1:length(files)
     %Load Image
-    Image = imread(files(i).name);
+    [Image,colorMap] = imread(files(i).name);
+    
+    %Cropping
+    [ruler,rulerMap] = imcrop(Image,colorMap);
+    [mole,moleMap] = imcrop(Image,colorMap);
     
     %Border Detection
-    [BorderXY, ImageBorder, ConversionFactor] = BorderDetection(Image);
+    [BorderXY, ImageBorder, ConversionFactor] = BorderDetection(mole);
     BorderXY = BorderXY{1};
     BorderXY = [BorderXY(:,2) BorderXY(:,1)]; %Making it XY points
-    ConversionFactor = PixelToMM;
     
     %Border-Thining
     BorderXY = BorderThining(BorderXY);
@@ -71,7 +74,7 @@ for i = 1:length(files)
     [Circ, maxPercentOverlap, deltaPerimeter] = CalcAssymetry(BorderXY, ImageBorder, Area);
     
     %Calc Color Variation
-    ColorVariation = CalcColorVariation(Image, BorderXY, ImageBorder);
+    ColorVariation = CalcColorVariation(mole, moleMap, BorderXY, ImageBorder);
     
     %Data Storage
     dataArray(i).Image = Image;
@@ -81,7 +84,7 @@ for i = 1:length(files)
     dataArray(i).Circ =Circ;
     dataArray(i).maxPercentOverlap = maxPercentOverlap;
     dataArray(i).deltaPerimeter = deltaPerimeter;
-    dataArray(i).ColorVariation = ColorVariation;
+    dataArray(i).ConversionFactor = ConversionFactor;
     dataArray(i).ColorVariation = ColorVariation;
 end
 
