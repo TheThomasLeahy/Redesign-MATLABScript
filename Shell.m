@@ -55,7 +55,7 @@ for i = 1:length(files)
     [mole,moleMap] = imcrop(Image,colorMap);
     
     %Border Detection
-    [BorderXY, ImageBorder, ConversionFactor] = BorderDetection(mole);
+    [BorderXY, ImageBorder] = BorderDetection(mole);
     BorderXY = BorderXY{1};
     BorderXY = [BorderXY(:,2) BorderXY(:,1)]; %Making it XY points
     
