@@ -10,16 +10,25 @@ figure;
 
 %mask Image with border 
 maskedImage = Image;
-bordermask = poly2mask(BorderXY(:,1), BorderXY(:,2), size(maskedImage,1), size(maskedImage,2));
-%imshow(bordermask);
-% filledmask= imfill(bordermask);
-% imshow(filledmask);
-%figure;
-%title('Mask Used in ColorHomog. Calculation');
-maskedImage = maskedImage .* bordermask;
-imshow(maskedImage);
-title('Masked Image')
+
+BW = imbinarize(maskedImage, .5);
+I_comp = imcomplement(BW);
+I_comp = imfill(I_comp,'holes');
+imshow(I_comp);
+maskedImage = maskedImage.*uint8(I_comp);
+for i=1:size(maskedImage, 1)
+    for j=1:size(maskedImage, 2)
+        if maskedImage(i,j)~=0
+            maskedImage(i,j)=1;
+        end 
+    end
+end
 figure;
+imshow(maskedImage, map);
+% maskedImage = maskedImage(I_filled);
+% imshow(maskedImage);
+% title('Masked Image')
+% figure;
 
 %find std dev of intensities across mole 
 ColorVar = stdfilt(maskedImage);
