@@ -9,6 +9,8 @@ I_despeckle = bwareaopen(I_comp,50);
 I_filled = imfill(I_despeckle,'holes');
 B = bwboundaries(I_filled);
 bound = B(1);
+end 
+
 
 
 
