@@ -1,4 +1,4 @@
-function [ColorVar] = CalcColorVariation(Image, BorderXY, ImageBorder)
+function [ColorVar] = CalcColorVariation(Image, colormap, BorderXY, ImageBorder)
 %Code by Laura Kenyon and Kristen Hagan 
 
 clc;

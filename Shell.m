@@ -71,7 +71,7 @@ for i = 1:length(files)
     Area =  CalcSize(BorderXY, ImageBorder);
     
     %Calc Assymetry
-    [Circ, maxPercentOverlap, deltaPerimeter] = CalcAssymetry(BorderXY, ImageBorder, Area);
+    %[Circ, maxPercentOverlap] = CalcAssymetry(BorderXY, ImageBorder, Area);
     
     %Calc Color Variation
     ColorVariation = CalcColorVariation(mole, moleMap, BorderXY, ImageBorder);
