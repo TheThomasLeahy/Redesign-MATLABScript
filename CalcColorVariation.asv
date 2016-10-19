@@ -4,7 +4,8 @@ function [ColorVar] = CalcColorVariation(Image, map, BorderXY, ImageBorder)
 clc;
 %output simple colormap 
 imshow(Image,map)
-title('Colormap of Image');
+colorbar;
+title('ColorMap of Image');
 figure;
 %find homogeneity of only mole 
 

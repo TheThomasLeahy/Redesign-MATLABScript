@@ -74,7 +74,7 @@ for i = 1:length(files)
     %[Circ, maxPercentOverlap] = CalcAssymetry(BorderXY, ImageBorder, Area);
     
     %Calc Color Variation
-    ColorVariation = CalcColorVariation(mole, moleMap, BorderXY, ImageBorder);
+    ColorVariation = CalcColorVariation(mole, colorMap, BorderXY, ImageBorder);
     
     %Data Storage
     dataArray(i).Image = Image;
