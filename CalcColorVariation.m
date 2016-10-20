@@ -5,8 +5,10 @@ clc;
 %output simple colormap 
 imshow(Image,map)
 title('Colormap of Image');
+figure;
 imshow(ImageBorder);
 title('Mask')
+figure;
 %find homogeneity of only mole 
 
 %mask Image with border 
