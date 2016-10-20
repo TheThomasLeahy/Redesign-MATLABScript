@@ -14,6 +14,9 @@ maskedImage = Image;
 BW = imbinarize(maskedImage, .5);
 I_comp = imcomplement(BW);
 I_comp = imfill(I_comp,'holes');
+I_comp = imcomplement(I_comp);
+I_comp = bwareaopen(I_comp,50);
+I_comp = imcomplement(I_comp);
 imshow(I_comp);
 maskedImage = maskedImage.*uint8(I_comp);
 for i=1:size(maskedImage, 1)

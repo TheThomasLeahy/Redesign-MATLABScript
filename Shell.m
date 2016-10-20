@@ -51,7 +51,9 @@ for i = 1:length(files)
     [Image,colorMap] = imread(files(i).name);
     
     %Cropping
+    figure('Name', ' Crop the Ruler ');
     [ruler,rulerMap] = imcrop(Image,colorMap);
+    figure('Name', ' Crop the Mole ');
     [mole,moleMap] = imcrop(Image,colorMap);
     
     %Border Detection
