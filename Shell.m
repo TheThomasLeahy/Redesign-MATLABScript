@@ -49,14 +49,22 @@ dataArray = struct(field1,value1,field2,value2,field3,value3,field4,...
 %Example:
 
 RGB = imread('mole2.jpg');
-[X,map] = rgb2ind(RGB,128);
+[X,map] = rgb2ind(RGB,256);
 imwrite(X,map,'savehere.gif','gif');
 
 
 
 %For each image:
 for i = 1:length(files)
+    
+    RGB = imread('mole2.jpg');
+    [X,map] = rgb2ind(RGB,256);
+    imwrite(X,map,'savehere.gif','gif');
+    
+    
     %Load Image
+    
+    
     [Image, colorMap] = imread(files(i).name);
     
     
@@ -93,7 +101,7 @@ for i = 1:length(files)
     dataArray(i).BorderXY = BorderXY;
     dataArray(i).ImageBorder = ImageBorder;
     dataArray(i).Area = Area;
-    dataArray(i).Circ =Circ;
+    dataArray(i).Circ = Circ;
     dataArray(i).maxPercentOverlap = maxPercentOverlap;
     dataArray(i).deltaPerimeter = deltaPerimeter;
     dataArray(i).ConversionFactor = ConversionFactor;
@@ -146,6 +154,22 @@ hold off;
 %Output and Plots metrics over Time (Image Number)
 %Relation to what is bad
 
+figure('Name', 'Asymmetry Timelapse');
+subplot(1,3,1);
+plot(dataArray(:).Circ);
+title('Cirularity Index');
+xlabel('Images')
+ylabel('Circularity Index');
+subplot(1,3,2);
+plot(dataArray(:).maxPercentOverlap);
+title('Maximum Percent Overlap');
+xlabel('Images');
+ylabel('Maximum Percentage Overlap');
+subplot(1,3,3);
+plot(dataArray(:).deltaPerimeter);
+title('Delta Perimeter');
+xlabel('Images');
+ylabel('Delta Perimeter');
 
 %Color Variation (Kristen)
 %Finding changes between Images, etc.
