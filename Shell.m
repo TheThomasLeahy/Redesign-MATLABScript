@@ -45,12 +45,6 @@ dataArray = struct(field1,value1,field2,value2,field3,value3,field4,...
     value4, field5, value5, field6,value6,field7,value7,...
     field8, value8, field9, value9);
 
-%To create a gif from a jpg
-%Example:
-
-RGB = imread('mole2.jpg');
-[X,map] = rgb2ind(RGB,256);
-imwrite(X,map,'savehere.gif','gif');
 
 
 
@@ -59,17 +53,26 @@ for i = 1:length(files)
     
     %Create a .gif from the .jpg
     [imageJPG, colorMapJPG] = imread(files(i).name);
-    [X,map] = rgb2ind(imageJPG,256);
-    imwrite(X,map,'thisImage.gif','gif');
-    [imageGIF,colorMapGIF] = imread('thisImage.gif');
     
     %Cropping
     figure('Name', ' Crop the Ruler ');
-    [rulerGIF,rulerMapGIF, rect] = imcrop(imageGIF,colorMapGIF);
-    [rulerJPG, rulerMAPJPG] = imcrop(imageJPG, colorMapJPG, rect);
+    [rulerJPG,rulerMapJPG] = imcrop(imageJPG,colorMapJPG);
     figure('Name', ' Crop the Mole ');
-    [moleGIF,moleMapGIF,rect] = imcrop(imageGIF,colorMapGIF);
-    [moleJPG, moleMAPJPG] = imcrop(imageJPG, colorMapJPG, rect);
+    [moleJPG, moleMAPJPG] = imcrop(imageJPG, colorMapJPG);
+    
+    %Save ruler as gif
+    [X,map] = rgb2ind(rulerJPG,256);
+    imwrite(X,map,'thisruler.gif','gif');
+    [rulerGIF,rulerMapGIF] = imread('thisruler.gif');
+    
+    %Find converion factor from ruler
+    
+    
+    
+    %Save mole as a gif
+    [X,map] = rgb2ind(moleJPG,256);
+    imwrite(X,map,'thismole.gif','gif');
+    [moleGIF,moleMapGIF] = imread('thismole.gif');
     
     %Border Detection
     [BorderXY, ImageBorder] = BorderDetection(moleGIF);
