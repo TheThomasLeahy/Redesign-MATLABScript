@@ -48,13 +48,14 @@ dataArray = struct(field1,value1,field2,value2,field3,value3,field4,...
 %For each image:
 for i = 1:length(files)
     %Load Image
-    [Image,colorMap] = imread(files(i).name);
-    
+    Imagejpg = imread(files(i).name);
+    [Igif,map] = rgb2ind(Imagejpg,32);
+[IND,map] = rgb2ind(img,32);
     %Cropping
     figure('Name', ' Crop the Ruler ');
-    [ruler,rulerMap] = imcrop(Image,colorMap);
+    [ruler,rulerMap] = imcrop(Igif,colorMap);
     figure('Name', ' Crop the Mole ');
-    [mole,moleMap] = imcrop(Image,colorMap);
+    [mole,moleMap] = imcrop(Igif,colorMap);
     
     %Border Detection
     [BorderXY, ImageBorder] = BorderDetection(mole);
@@ -76,7 +77,7 @@ for i = 1:length(files)
     %[Circ, maxPercentOverlap] = CalcAssymetry(BorderXY, ImageBorder, Area);
     
     %Calc Color Variation
-    ColorVariation = CalcColorVariation(mole, colorMap, ImageBorder);
+    ColorVariation = CalcColorVariation(mole, colorMap, ImageBorder, Imagejpg);
     
     %Data Storage
     dataArray(i).Image = Image;

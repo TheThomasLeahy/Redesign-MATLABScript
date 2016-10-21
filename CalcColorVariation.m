@@ -1,4 +1,4 @@
-function [ColorVar] = CalcColorVariation(Image, map, ImageBorder)
+function [ColorVar] = CalcColorVariation(Image, map, ImageBorder, Imagejpg)
 %Code by Kristen Hagan 
 cmap = map;
 clc;
@@ -36,7 +36,7 @@ figure;
 
 %find color distribution in image 
 subplot(2, 2, 1);
-imshow(maskedImage);
+imshow(Imagejpg);
 title('Original Color Image');
 
 
