@@ -17,7 +17,7 @@ maskedImage = Image;
 for i=1:size(ImageBorder,1)
     for j=1:size(ImageBorder,2)
         if ImageBorder(i,j) ~=1
-            maskedImage(i,j) = 0; 
+            maskedImage(i,j) = 255; 
         end 
     end 
    
