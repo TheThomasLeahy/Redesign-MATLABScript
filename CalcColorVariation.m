@@ -1,6 +1,6 @@
-function [ColorVar] = CalcColorVariation(Image, map, BorderXY, ImageBorder)
-%Code by Laura Kenyon and Kristen Hagan 
-
+function [ColorVar] = CalcColorVariation(Image, map, ImageBorder)
+%Code by Kristen Hagan 
+cmap = map;
 clc;
 %output simple colormap 
 imshow(Image,map)
@@ -26,17 +26,19 @@ for i=1:size(ImageBorder,1)
 
 imshow(maskedImage, map);
 title('Masked Mole')
-% maskedImage = maskedImage(I_filled);
-% imshow(maskedImage);
-% title('Masked Image')
-% figure;
 
 %find std dev of intensities across mole 
 figure;
-ColorVar = stdfilt(maskedImage);
+ColorVar = stdfilt(Image);
 imshow(ColorVar);
-title('Standard Deviation');
+title('Standard Deviation of Image');
 figure;
+
+%find color distribution in image 
+redPlane = maskedImage(:, :, 1);
+greenPlane = maskedImage(:, :, 2);
+bluePlane = maskedImage(:, :, 3);
+
 
 end
 

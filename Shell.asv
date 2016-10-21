@@ -76,7 +76,7 @@ for i = 1:length(files)
     %[Circ, maxPercentOverlap] = CalcAssymetry(BorderXY, ImageBorder, Area);
     
     %Calc Color Variation
-    ColorVariation = CalcColorVariation(mole, colorMap, ImageBorder);
+    ColorVariation = CalcColorVariation(mole, colorMap, BorderXY, ImageBorder);
     
     %Data Storage
     dataArray(i).Image = Image;
@@ -123,7 +123,6 @@ hold on;
 plot(knownAreas);
 plot(areas);
 hold off;
-
 %Output and Plot Change in Area over Time
 subplot(1,2,2);
 hold on;
@@ -137,9 +136,11 @@ hold off;
 %Relation to what is bad
 
 
+
 %Color Variation (Kristen)
 %Finding changes between Images, etc.
-cmap = colorMap;
+
+
 
 
 %Generate Table here (
