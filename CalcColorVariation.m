@@ -23,7 +23,6 @@ for i=1:size(ImageBorder,1)
    
  end
 
-
 imshow(maskedImage, map);
 title('Masked Mole')
 
@@ -35,32 +34,32 @@ title('Standard Deviation of Image');
 figure;
 
 %find color distribution in image 
-% subplot(2, 2, 1);
-% imshow(Imagejpg);
-% title('Original Color Image');
-% 
-% 
-% redPlane = map(:, :, 1);
-% greenPlane = map(:, :, 2);
-% bluePlane = map(:, :, 3);
-% 
-% [pixelCountR grayLevelsR] = imhist(redPlane);
-% subplot(2, 2, 2);
-% plot(pixelCountR, 'r');
-% title('Histogram of red plane');
-% xlim([0 grayLevelsR(end)]); % Scale x axis manually.
-% 
-% [pixelCountG grayLevelsG] = imhist(greenPlane);
-% subplot(2, 2, 3);
-% plot(pixelCountG, 'g');
-% title('Histogram of green plane');
-% xlim([0 grayLevelsG(end)]); % Scale x axis manually.
-% 
-% [pixelCountB grayLevelsB] = imhist(bluePlane);
-% subplot(2, 2, 4);
-% plot(pixelCountB, 'b');
-% title('Histogram of blue plane');
-% xlim([0 grayLevelsB(end)]); % Scale x axis manually.
+subplot(2, 2, 1);
+imshow(Imagejpg);
+title('Original Color Image');
+
+
+red = map(:, :, 1);
+green = map(:, :, 2);
+blue = map(:, :, 3);
+
+[pixelCountR grayLevelsR] = imhist(red);
+subplot(2, 2, 2);
+plot(pixelCountR, 'r');
+title('Histogram of red plane');
+xlim([0 grayLevelsR(end)]); 
+
+[pixelCountG grayLevelsG] = imhist(green);
+subplot(2, 2, 3);
+plot(pixelCountG, 'g');
+title('Histogram of green plane');
+xlim([0 grayLevelsG(end)]); 
+
+[pixelCountB grayLevelsB] = imhist(blue);
+subplot(2, 2, 4);
+plot(pixelCountB, 'b');
+title('Histogram of blue plane');
+xlim([0 grayLevelsB(end)]); 
 
 end
 
