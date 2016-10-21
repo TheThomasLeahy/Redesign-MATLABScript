@@ -61,21 +61,21 @@ for i = 1:length(files)
     [moleJPG, moleMAPJPG] = imcrop(imageJPG, colorMapJPG);
     
     %Save ruler as gif
-    [X,map] = rgb2ind(rulerJPG,256);
-    imwrite(X,map,'thisruler.gif','gif');
-    [rulerGIF,rulerMapGIF] = imread('thisruler.gif');
+%     [X,map] = rgb2ind(rulerJPG,64);
+%     imwrite(X,map,'thisruler.gif','gif');
+%     [rulerGIF,rulerMapGIF] = imread('thisruler.gif');
     
     %Find converion factor from ruler
     
     
     
     %Save mole as a gif
-    [X,map] = rgb2ind(moleJPG,256);
-    imwrite(X,map,'thismole.gif','gif');
-    [moleGIF,moleMapGIF] = imread('thismole.gif');
+%     [X,map] = rgb2ind(moleJPG,64);
+%     imwrite(X,map,'thismole.gif','gif');
+%     [moleGIF,moleMapGIF] = imread('thismole.gif');
     
     %Border Detection
-    [BorderXY, ImageBorder] = BorderDetection(moleGIF);
+    [BorderXY, ImageBorder] = BorderDetection(moleJPG);
     BorderXY = BorderXY{1};
     BorderXY = [BorderXY(:,2) BorderXY(:,1)]; %Making it XY points
     
@@ -94,7 +94,7 @@ for i = 1:length(files)
     [Circ, maxPercentOverlap, deltaPerimeter] = CalcAssymetry(BorderXY, ImageBorder, Area);
     
     %Calc Color Variation
-    ColorVariation = CalcColorVariation(moleJPG, moleMapJPG, ImageBorder);
+    ColorVariation = CalcColorVariation(moleJPG, moleMAPJPG, ImageBorder);
     
     %Data Storage
     dataArray(i).Image = Image;
