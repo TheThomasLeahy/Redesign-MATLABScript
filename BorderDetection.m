@@ -12,6 +12,7 @@ bound = B(1);
 imshow(I);
 hold on;
 visboundaries(bound);
+
 end 
 
 
