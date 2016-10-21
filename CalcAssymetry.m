@@ -1,4 +1,4 @@
-function [ Circ, maxPercentOverlap ] = CalcAssymetry(BorderXY, ImageBorder, Area)
+function [ Circ, percentOverlap, deltaPerim ] = CalcAssymetry(BorderXY, ImageBorder, Area)
 %Code by Thomas Leahy
 %Quanitifies the assymetry of the image
 %Ideas/Algorithms taken from the following paper:
@@ -19,8 +19,8 @@ xCent = mean(BorderXY(:,1));
 yCent = mean(BorderXY(:,2));
 xCent = round(xCent);
 yCent = round(yCent);
-tote = zeros(1,179);
-match = zeros(1,179);
+tote = zeros(1,180);
+match = zeros(1,180);
 for theta = 0:179
     %Find the line of sym
     xPoints = size(ImageBorder,1);
@@ -33,13 +33,16 @@ for theta = 0:179
         end
     end
     
-    Q1 = [xPoints(i) yPoints(1)];
-    Q2 = [xPoints(length(xPoints)) yPoints(length(yPoints))];
+    x1 = xPoints(1);
+    y1 = yPoints(1);
+    x2 = xPoints(length(xPoints));
+    y2 = xPoints(length(yPoints));
+    
     %Match points across the line of sym
     for i = 1:size(ImageBorder,1)
         for j = 1:size(ImageBorder,2)
             P = [i j];
-            d = abs(det([Q2-Q1;P-Q1]))/abs(Q2-Q1);
+            d = abs((y2-y1)*P(1) - (x2-x1)*P(2) + x2*y1 - y2*x1)/sqrt(((y2-y1)^2)+((x2-x1)^2));
             
             %Is this xy point above or below the symmetry line
             %We'll only consider points that are above it
@@ -50,14 +53,14 @@ for theta = 0:179
                 dx = round(d*sind(theta-90));
                 dy = round(d*cosd(theta-90));
                 xNew = i-(2*dx);
-                yNew = i+(2*dy);
+                yNew = j+(2*dy);
                 %Check if this point is still on the picture
-                if((xNew>=1) && (yNew<= size(ImageBorder,2)))
-                    tote(theta) = tote(theta) + 1;
+                if((xNew>=1) && (xNew <= size(ImageBorder,1)) && (yNew >= 1) && (yNew<= size(ImageBorder,2)))
+                    tote(theta+1) = tote(theta+1) + 1;
                     %Is this new point a match?
                     if ImageBorder(i,j) == ImageBorder(xNew, yNew)
                         %MATCH!
-                        match(theta) = match(theta) + 1;
+                        match(theta+1) = match(theta+1) + 1;
                     end
                 end
             end
@@ -67,22 +70,24 @@ for theta = 0:179
 end
 
 percent = (match./tote)*100;
-percent = max(percent);
+percentOverlap = max(percent);
 
 
 %% Fit to elipse and find change in perimeter
 
 %Find major axes and minor axes length
 
-[Mlength, mlength] = regionprops(ImageBorder,'MajorAxisLength','MinorAxisLength');
+Lengths = regionprops(ImageBorder,'MajorAxisLength','MinorAxisLength');
 
+Mlength = Lengths.MajorAxisLength;
+mlength = Lengths.MinorAxisLength;
 Majrad = Mlength/2;
 minrad = mlength/2;
 
 denom = ((Majrad+minrad)^2)*(sqrt(-3*(((Majrad-minrad)^2)/((Majrad+minrad)^2))+4)+10);
 EPerim = pi*(Majrad+minrad)*(((3*((Majrad-minrad)^2))/denom)+1);
 
-jEdges = Perimeter/EPerim; %Greater than 1 if jagged edges. 1 if perfect elipse
+deltaPerim = Perimeter/EPerim; %Greater than 1 if jagged edges. 1 if perfect elipse
 
 
 end
