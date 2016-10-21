@@ -5,7 +5,7 @@ function [bound,I_filled] = BorderDetection( I )
 
 I_bin = imbinarize(I);
 I_comp = imcomplement(I_bin);
-I_despeckle = bwareaopen(I_comp,50);
+I_despeckle = bwareaopen(I_comp,1000);
 I_filled = imfill(I_despeckle,'holes');
 B = bwboundaries(I_filled);
 bound = B(1);
