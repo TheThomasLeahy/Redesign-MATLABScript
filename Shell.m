@@ -45,6 +45,15 @@ dataArray = struct(field1,value1,field2,value2,field3,value3,field4,...
     value4, field5, value5, field6,value6,field7,value7,...
     field8, value8, field9, value9);
 
+%To create a gif from a jpg
+%Example:
+
+RGB = imread('mole2.jpg');
+[X,map] = rgb2ind(RGB,128);
+imwrite(X,map,'savehere.gif','gif');
+
+
+
 %For each image:
 for i = 1:length(files)
     %Load Image
@@ -74,7 +83,7 @@ for i = 1:length(files)
     Area =  CalcSize(BorderXY, ImageBorder);
     
     %Calc Assymetry
-    %[Circ, maxPercentOverlap] = CalcAssymetry(BorderXY, ImageBorder, Area);
+    [Circ, maxPercentOverlap, deltaPerimeter] = CalcAssymetry(BorderXY, ImageBorder, Area);
     
     %Calc Color Variation
     ColorVariation = CalcColorVariation(mole, colorMap, ImageBorder);
