@@ -57,25 +57,22 @@ imwrite(X,map,'savehere.gif','gif');
 %For each image:
 for i = 1:length(files)
     
-    RGB = imread('mole2.jpg');
-    [X,map] = rgb2ind(RGB,256);
-    imwrite(X,map,'savehere.gif','gif');
-    
-    
-    %Load Image
-    
-    
-    [Image, colorMap] = imread(files(i).name);
-    
+    %Create a .gif from the .jpg
+    [imageJPG, colorMapJPG] = imread(files(i).name);
+    [X,map] = rgb2ind(imageJPG,256);
+    imwrite(X,map,'thisImage.gif','gif');
+    [imageGIF,colorMapGIF] = imread('thisImage.gif');
     
     %Cropping
     figure('Name', ' Crop the Ruler ');
-    [ruler,rulerMap] = imcrop(Image,colorMap);
+    [rulerGIF,rulerMapGIF, rect] = imcrop(imageGIF,colorMapGIF);
+    [rulerJPG, rulerMAPJPG] = imcrop(imageJPG, colorMapJPG, rect);
     figure('Name', ' Crop the Mole ');
-    [mole,moleMap] = imcrop(Image,colorMap);
+    [moleGIF,moleMapGIF,rect] = imcrop(imageGIF,colorMapGIF);
+    [moleJPG, moleMAPJPG] = imcrop(imageJPG, colorMapJPG, rect);
     
     %Border Detection
-    [BorderXY, ImageBorder] = BorderDetection(mole);
+    [BorderXY, ImageBorder] = BorderDetection(moleGIF);
     BorderXY = BorderXY{1};
     BorderXY = [BorderXY(:,2) BorderXY(:,1)]; %Making it XY points
     
@@ -94,7 +91,7 @@ for i = 1:length(files)
     [Circ, maxPercentOverlap, deltaPerimeter] = CalcAssymetry(BorderXY, ImageBorder, Area);
     
     %Calc Color Variation
-    ColorVariation = CalcColorVariation(mole, colorMap, ImageBorder);
+    ColorVariation = CalcColorVariation(moleJPG, moleMapJPG, ImageBorder);
     
     %Data Storage
     dataArray(i).Image = Image;
