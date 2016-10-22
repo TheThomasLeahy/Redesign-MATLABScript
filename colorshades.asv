@@ -5,23 +5,7 @@ function colorshades(rgbImage, mask)
 	set(gcf,'name','Color Matching Demo by ImageAnalyst','numbertitle','off') 
  
 	[rows columns numberOfColorBands] = size(rgbImage);  
-	if strcmpi(class(rgbImage), 'uint8')
-		% Flag for 256 gray levels.
-		eightBit = true;
-	else
-		eightBit = false;
-	end
-	if numberOfColorBands == 1
-		if isempty(storedColorMap)
-			rgbImage = cat(3, rgbImage, rgbImage, rgbImage);
-		else
-			%indexed image.
-			rgbImage = ind2rgb(rgbImage, storedColorMap);
-			if eightBit
-				rgbImage = uint8(255 * rgbImage);
-			end
-		end
-	end
+    rgbImage = uint8(255 * rgbImage);
 	
 	% Display the original image.
 	h1 = subplot(3, 4, 1);
@@ -43,7 +27,7 @@ function colorshades(rgbImage, mask)
 
 	% Convert image from RGB colorspace to lab color space.
 	cform = makecform('srgb2lab');
-	lab_Image = applycform(im2double(maskedRgbImage),cform);
+	lab_Image = applycform(im2double(rgbImage),cform);
 	
 	% Extract out the color bands from the original image
 	% into 3 separate 2D arrays, one for each color component.
@@ -161,7 +145,12 @@ function colorshades(rgbImage, mask)
 	% Alert user that the demo has finished.
 	message = sprintf('Done!\n\nThe demo has finished.\nRegions close in color to the color you picked\nwill be dark in the Delta E image.\n');
 	msgbox(message);
-
+	
+catch ME
+	errorMessage = sprintf('Error running this m-file:\n%s\n\nThe error message is:\n%s', ...
+		mfilename('fullpath'), ME.message);
+	errordlg(errorMessage);
+end
 return; 
 
 % Get the average lab within the mask region.

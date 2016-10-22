@@ -20,7 +20,7 @@ newmap(end, :) = [1 1 1];
 for i=1:size(ImageBorder,1)
     for j=1:size(ImageBorder,2)
         if ImageBorder(i,j) ==0     %if its black area on mask
-           maskedImage(i,j)= size(map,1)+1; 
+           maskedImage(i,j)= imcomplement(ImageBorder(i,j));
 
         end 
     end 
@@ -38,8 +38,7 @@ imshow(ColorVar);
 title('Standard Deviation of Image');
 figure;
 
-rgbImage = ind2rgb(maskedImage, map);
-figure;
+rgbImage = ind2rgb(Image, map);
 subplot(2, 2, 1);
 imshow(rgbImage, []);
 title('Original Color Image');
@@ -64,6 +63,9 @@ title('Histogram of green plane');
 subplot(2, 2, 4);
 plot(pixelCountB, 'b');
 title('Histogram of blue plane');
+
+%what color are in image
+colorshades(rgbImage, ImageBorder)
 
 end
 
