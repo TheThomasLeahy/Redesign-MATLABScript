@@ -65,7 +65,7 @@ plot(pixelCountB, 'b');
 title('Histogram of blue plane');
 
 %what color are in image
-colorshades(rgbImage, ImageBorder)
+%colorshades(rgbImage, ImageBorder)
 
 end
 

@@ -45,9 +45,6 @@ dataArray = struct(field1,value1,field2,value2,field3,value3,field4,...
     value4, field5, value5, field6,value6,field7,value7,...
     field8, value8, field9, value9);
 
-
-
-
 %For each image:
 for i = 1:length(files)
     
@@ -90,10 +87,10 @@ for i = 1:length(files)
     dataArray(i).BorderXY = BorderXY;
     dataArray(i).ImageBorder = ImageBorder;
     dataArray(i).Area = Area;
-    dataArray(i).Circ = Circ;
-    dataArray(i).maxPercentOverlap = maxPercentOverlap;
-    dataArray(i).deltaPerimeter = deltaPerimeter;
-    dataArray(i).ConversionFactor = ConversionFactor;
+   % dataArray(i).Circ = Circ;
+    %dataArray(i).maxPercentOverlap = maxPercentOverlap;
+    %dataArray(i).deltaPerimeter = deltaPerimeter;
+    %dataArray(i).ConversionFactor = ConversionFactor;
     dataArray(i).ColorVariation = ColorVariation;
 end
 
@@ -104,21 +101,20 @@ end
 %address it like this "thisarea = dataArray(i).Area;"
 
 %Border Change over time/Contour Map (Kristen)
-%What is pink black or whatever
-contour(BorderXY(:,1), BorderXY(:,2));
-hold on
-if length(files)>1
-    for i=2:length(files)
-        z = num2str(i);
-        contour(BorderXY_z(:,1), BorderXY_z(:,2));
-    end
-end
+%need to normalize 
+
+figure;
+for i=1:size(dataArray,2)
+plot(dataArray(i).BorderXY(:,1), dataArray(i).BorderXY(:,2) );
+hold on;
+end 
+hold off;
 
 %Area (MAHY)
 knownAreas = [83192 89335 96728 100465 111878];
 d_knownAreas  = diff(knownAreas);
 moleArea = {};
-for i=1:length(files);
+for i=1:length(files)
     moleArea{end+1}=dataArray(i).Area / (dataArray(i).ConversionFactor)^2;  %is this right?
 end
 area = cell2mat(moleArea);
@@ -162,7 +158,6 @@ ylabel('Delta Perimeter');
 
 %Color Variation (Kristen)
 %Finding changes between Images, etc.
-cmap = colorMap;
 
 
 %Generate Table here (
