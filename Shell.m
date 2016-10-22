@@ -40,10 +40,12 @@ field6 = 'maxPercentOverlap'; value6 = [];
 field7 = 'deltaPerimeter'; value7 = [];
 field8 = 'ColorVariation'; value8 = [];
 field9 = 'ConversionFactor'; value9 = []; 
+field10 = 'MajorAxis'; value10 = [];
+field11 = 'MinorAxis'; value11 = [];
 
 dataArray = struct(field1,value1,field2,value2,field3,value3,field4,...
     value4, field5, value5, field6,value6,field7,value7,...
-    field8, value8, field9, value9);
+    field8, value8, field9, value9, field10, value10, field11, value11);
 
 %For each image:
 for i = 1:length(files)
@@ -61,8 +63,6 @@ for i = 1:length(files)
     imshow(ruler);
     figure;
     imshow(mole);
-    %Find converion factor from ruler
-    %MAHY 
 %}
     
     %Border Detection
@@ -87,6 +87,12 @@ for i = 1:length(files)
     %Calc Color Variation
     ColorVariation = CalcColorVariation(mole, colormap, ImageBorder);
     
+    %Calc Conversion Factor
+    ConversionFactor = CalcConversion(ruler);
+    
+    %Calc Major and Minor Axis Lengths
+    [major, minor] = CalcAxes(ImageBorder);
+    
     %Data Storage
     dataArray(i).Image = mole;
     dataArray(i).BorderXY = BorderXY;
@@ -95,8 +101,10 @@ for i = 1:length(files)
    % dataArray(i).Circ = Circ;
     %dataArray(i).maxPercentOverlap = maxPercentOverlap;
     %dataArray(i).deltaPerimeter = deltaPerimeter;
-    %dataArray(i).ConversionFactor = ConversionFactor;
+    dataArray(i).ConversionFactor = ConversionFactor;
     dataArray(i).ColorVariation = ColorVariation;
+    dataArray(i).MajorAxis = major;
+    dataArray(i).MinorAxis = minor;
 end
 
 %% Time-Lapse
@@ -116,28 +124,38 @@ end
 hold off;
 
 %Area (MAHY)
-knownAreas = [83192 89335 96728 100465 111878];
-d_knownAreas  = diff(knownAreas);
-moleArea = {};
+allMajor = {};
+allMinor = {};
 for i=1:length(files)
-    moleArea{end+1}=dataArray(i).Area / (dataArray(i).ConversionFactor)^2;  %is this right?
+    allMajor{end+1}=dataArray(i).MajorAxis / ((dataArray(i).ConversionFactor)^2);
+    allMinor{end+1}=dataArray(i).MinorAxis / ((dataArray(i).ConversionFactor)^2);
 end
-area = cell2mat(moleArea);
-d_area = diff(area);
+majorSize = cell2mat(allMajor);
+d_majorSize = diff(majorSize);
+minorSize = cell2mat(allMinor);
+d_minorSize = diff(minorSize);
 
-%Output and Plot Area over Time (Image Number)
-subplot(1,1,1);
+%Plot over time
+figure();
+plot(majorSize);
 hold on;
-plot(knownAreas);
-plot(areas);
+plot(minorSize);
+xlabel('Picture Number');
+ylabel('Length (mm)');
+title('Major and Minor Lengths over Time');
+legend('Major Axis','Minor Axis');
 hold off;
 
-%Output and Plot Change in Area over Time
-subplot(1,2,2);
+figure();
+plot(d_majorSize);
 hold on;
-plot(d_knownArea);
-plot(d_areas);
+plot(d_minorSize);
+xlabel('Picture Number');
+ylabel('Change in Length (mm)');
+title('Change in Major and Minor Lengths over Time');
+legend('Major Axis','Minor Axis');
 hold off;
+
 %Relation to what is bad
 
 %Asymmetry (TOM)
