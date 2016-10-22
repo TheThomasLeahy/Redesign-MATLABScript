@@ -1,6 +1,5 @@
 function [ColorVar] = CalcColorVariation(Image, map, ImageBorder)
 %Code by Kristen Hagan 
-cmap = map;
 clc;
 %output simple colormap 
 imshow(Image, map)
@@ -39,7 +38,37 @@ imshow(ColorVar);
 title('Standard Deviation of Image');
 figure;
 
+rgbImage = ind2rgb(maskedImage, map);
+figure;
 
+[rows columns numberOfColorBands] = size(rgbImage);
+subplot(2, 2, 1);
+imshow(rgbImage, []);
+title('Original Color Image');
+set(gcf, 'Position', get(0,'Screensize')); % Maximize figure.
+
+redPlane = rgbImage(:, :, 1);
+greenPlane = rgbImage(:, :, 2);
+bluePlane = rgbImage(:, :, 3);
+
+% Let's get its histograms.
+[pixelCountR grayLevelsR] = imhist(redPlane);
+subplot(2, 2, 2);
+plot(pixelCountR, 'r');
+title('Histogram of red plane');
+xlim([0 grayLevelsR(end)]); % Scale x axis manually.
+
+[pixelCountG grayLevelsG] = imhist(greenPlane);
+subplot(2, 2, 3);
+plot(pixelCountG, 'g');
+title('Histogram of green plane');
+xlim([0 grayLevelsG(end)]); % Scale x axis manually.
+
+[pixelCountB grayLevelsB] = imhist(bluePlane);
+subplot(2, 2, 4);
+plot(pixelCountB, 'b');
+title('Histogram of blue plane');
+xlim([0 grayLevelsB(end)]); % Scale x axis manually.
 
 end
 
