@@ -56,10 +56,15 @@ for i = 1:length(files)
     [ruler,rulermap] = imcrop(image,colormap);
     figure('Name', ' Crop the Mole ');
     [mole, molemap] = imcrop(image, colormap);
-  
+  %{
+    figure;
+    imshow(ruler);
+    figure;
+    imshow(mole);
     %Find converion factor from ruler
     %MAHY 
-
+%}
+    
     %Border Detection
     [BorderXY, ImageBorder] = BorderDetection(mole, colormap);
     BorderXY = BorderXY{1};
