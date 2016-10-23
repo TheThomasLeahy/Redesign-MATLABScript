@@ -39,9 +39,9 @@ field5 = 'Circ'; value5 = [];
 field6 = 'maxPercentOverlap'; value6 = [];
 field7 = 'deltaPerimeter'; value7 = [];
 field8 = 'ColorVariation'; value8 = [];
-field9 = 'ConversionFactor'; value9 = [];
+field9 = 'ConversionFactor'; value9 = []; 
 field10 = 'MajorAxis'; value10 = [];
-field11 = 'MinorAxis'; value11 = [];
+field11 = 'MinorAxis'; value11 = []; 
 field12 = 'AreaPixel';  value12 = [];
 
 dataArray = struct(field1,value1,field2,value2,field3,value3,field4,...
@@ -61,12 +61,12 @@ for i = 1:length(files)
     figure('Name', ' Crop the Mole ');
     [mole, molemap] = imcrop(image, colormap);
     close all;
-    %{
+  %{
     figure;
     imshow(ruler);
     figure;
     imshow(mole);
-    %}
+%}
     
     %Border Detection
     [BorderXY, ImageBorder] = BorderDetection(mole, colormap);
@@ -96,14 +96,14 @@ for i = 1:length(files)
     
     %Calc Color Variation
     ColorVariation = CalcColorVariation(mole, colormap, ImageBorder);
-    
+        
     %Data Storage
     dataArray(i).Image = mole;
     dataArray(i).BorderXY = BorderXY;
     dataArray(i).ImageBorder = ImageBorder;
     dataArray(i).Area = AreaPixel;
     dataArray(i).Area = AreaMM;
-    % dataArray(i).Circ = Circ;
+   % dataArray(i).Circ = Circ;
     %dataArray(i).maxPercentOverlap = maxPercentOverlap;
     %dataArray(i).deltaPerimeter = deltaPerimeter;
     dataArray(i).ConversionFactor = ConversionFactor;
@@ -120,6 +120,8 @@ end
 %address it like this "thisarea = dataArray(i).Area;"
 
 %Border Change over time/Contour Map (Kristen)
+%need to normalize 
+
 
 %Find largest image
 max = 0;
@@ -135,27 +137,37 @@ constFactor = dataArray(ind).ConversionFactor;
 setPixelSize = size(dataArray(ind).ImageBorder);
 centroidCoord = round(setPixelSize/2);
 figure;
+xNew = [];
+yNew = [];
+BorderXY = [];
 for i = 1:size(dataArray,2)
-    xNew = [];
-    yNew = [];
-    for x = 1:size(dataArray(i).BorderXY,1)
-        if x ~= ind
-            %Find distance from centroid in mm
-            dx = dataArray(i).BorderXY(x,1)-dataArray(i).Centroid(1);
-            dy = dataArray(i).BorderXY(x,2)-dataArray(i).Centroid(2);
-            dxNEW = dx/dataArray(i).ConversionFactor;
-            dyNEW = dy/dataArray(i).ConversionFactor;
-            %Scale by constant pixel/mm ratio, found above
-            dxScale = dxNEW*constFactor;
-            dyScale = dyNEW*constFactor;
-            %Find new Border
-            xNew = [xNew; dxScale + centroidCoord(1)];
-            yNew = [yNew;  dyScale + centroidCoord(2)];
-        end
+    for x = 1:size(dataArray(i).BorderXY)
+        %Find distance from centroid in mm
+        newBorder = zeros(size(dataArray(i).BorderXY
+        dx = BorderXY(x,1)-centroidCoord(1);
+        dy = BorderXY(x,2)-centroidCoord(2);
+        dxNEW = dx/dataArray(i).ConversionFactor;
+        dyNEW = dy/dataArray(i).ConversionFactor;
+        %Scale by constant pixel/mm ratio, found above
+        dxScale = dxNEW*constFactor;
+        dyScale = dyNEW*constFactor;
+        %Find new Border
+        xNew = [xNew; dxScale + centroidCoord(1)];
+        yNew = [yNew;  dyScale + centroidCoord(2)];        
     end
     plot(xNew,yNew);
     hold on;
 end
+hold off;
+
+
+
+figure;
+
+for i=1:size(dataArray,2)
+plot(dataArray(i).BorderXY(:,1), dataArray(i).BorderXY(:,2) );
+hold on;
+end 
 hold off;
 
 %Area (MAHY)
@@ -216,7 +228,6 @@ ylabel('Delta Perimeter');
 
 %Color Variation (Kristen)
 %Finding changes between Images, etc.
-
 
 
 %Generate Table here (
