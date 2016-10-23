@@ -164,8 +164,8 @@ hold off;
 allMajor = {};
 allMinor = {};
 for i=1:length(files)
-    allMajor{end+1}=dataArray(i).MajorAxis / ((dataArray(i).ConversionFactor)^2);
-    allMinor{end+1}=dataArray(i).MinorAxis / ((dataArray(i).ConversionFactor)^2);
+    allMajor{end+1}=dataArray(i).MajorAxis / ((dataArray(i).ConversionFactor));
+    allMinor{end+1}=dataArray(i).MinorAxis / ((dataArray(i).ConversionFactor));
 end
 majorSize = cell2mat(allMajor);
 d_majorSize = diff(majorSize);
