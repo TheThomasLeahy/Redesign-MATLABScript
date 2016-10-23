@@ -98,6 +98,7 @@ for i = 1:length(files)
     %Calc Color Variation
     ColorVariation = CalcColorVariation(mole, colormap, ImageBorder);
     ColorSD = (ColorVariation/AreaPixel)*100;
+    
     %Data Storage
     dataArray(i).Image = mole;
     dataArray(i).BorderXY = BorderXY;
