@@ -1,4 +1,4 @@
-function [ColorVar] = CalcColorVariation(Image, map, ImageBorder)
+function [count] = CalcColorVariation(Image, map, ImageBorder)
 %Code by Kristen Hagan 
 clc;
 %output simple colormap 
@@ -37,6 +37,16 @@ ColorVar = stdfilt(maskedImage);
 imshow(ColorVar);
 title('Standard Deviation of Image');
 figure;
+
+count =0;
+for i=1:size(ColorVar,1)
+    for j=1:size(ColorVar,2)
+        if ImageBorder(i,j) ~=0     
+           count = count+1;
+
+        end 
+    end 
+end
 
 rgbImage = ind2rgb(Image, map);
 subplot(2, 2, 1);
