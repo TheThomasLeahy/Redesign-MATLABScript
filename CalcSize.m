@@ -1,5 +1,6 @@
-function [Area] = CalcSize(~, ImageBorder )
+function [AreaPixel, AreaMM] = CalcSize(~, ImageBorder, ConversionFactor)
 %Code by Thomas Leahy
-Area = sum(sum(ImageBorder));
+AreaPixel = sum(sum(ImageBorder));
+AreaMM = AreaPixel / ConversionFactor;
 end
 

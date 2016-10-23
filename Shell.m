@@ -34,18 +34,20 @@ files = theseFiles;
 field1 = 'Image';  value1 = [];
 field2 = 'BorderXY';  value2 = [];
 field3 = 'ImageBorder';  value3 = [];
-field4 = 'Area';  value4 = [];
+field4 = 'AreaMM';  value4 = [];
 field5 = 'Circ'; value5 = [];
 field6 = 'maxPercentOverlap'; value6 = [];
 field7 = 'deltaPerimeter'; value7 = [];
 field8 = 'ColorVariation'; value8 = [];
 field9 = 'ConversionFactor'; value9 = []; 
 field10 = 'MajorAxis'; value10 = [];
-field11 = 'MinorAxis'; value11 = [];
+field11 = 'MinorAxis'; value11 = []; 
+field12 = 'AreaPixel';  value12 = [];
 
 dataArray = struct(field1,value1,field2,value2,field3,value3,field4,...
     value4, field5, value5, field6,value6,field7,value7,...
-    field8, value8, field9, value9, field10, value10, field11, value11);
+    field8, value8, field9, value9, field10, value10, field11, value11,...
+    field12, value12);
 
 %For each image:
 for i = 1:length(files)
@@ -78,26 +80,27 @@ for i = 1:length(files)
     hold on;
     title('Border Outline');
     
-    %Calc Size
-    Area =  CalcSize(BorderXY, ImageBorder);
-    
-    %Calc Assymetry
-    %[Circ, maxPercentOverlap, deltaPerimeter] = CalcAssymetry(BorderXY, ImageBorder, Area);
-    
-    %Calc Color Variation
-    ColorVariation = CalcColorVariation(mole, colormap, ImageBorder);
-    
     %Calc Conversion Factor
     ConversionFactor = CalcConversion(ruler);
     
     %Calc Major and Minor Axis Lengths
     [major, minor] = CalcAxes(ImageBorder);
     
+    %Calc Size
+    [AreaPixel, AreaMM] =  CalcSize(BorderXY, ImageBorder, ConversionFactor);
+    
+    %Calc Assymetry
+    %[Circ, maxPercentOverlap, deltaPerimeter] = CalcAssymetry(BorderXY, ImageBorder, Area);
+    
+    %Calc Color Variation
+    ColorVariation = CalcColorVariation(mole, colormap, ImageBorder);
+        
     %Data Storage
     dataArray(i).Image = mole;
     dataArray(i).BorderXY = BorderXY;
     dataArray(i).ImageBorder = ImageBorder;
-    dataArray(i).Area = Area;
+    dataArray(i).Area = AreaPixel;
+    dataArray(i).Area = AreaMM;
    % dataArray(i).Circ = Circ;
     %dataArray(i).maxPercentOverlap = maxPercentOverlap;
     %dataArray(i).deltaPerimeter = deltaPerimeter;
@@ -117,6 +120,7 @@ end
 %need to normalize 
 
 figure;
+
 for i=1:size(dataArray,2)
 plot(dataArray(i).BorderXY(:,1), dataArray(i).BorderXY(:,2) );
 hold on;
