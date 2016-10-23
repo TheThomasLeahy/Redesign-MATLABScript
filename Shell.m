@@ -93,7 +93,7 @@ for i = 1:length(files)
     [AreaPixel, AreaMM] =  CalcSize(BorderXY, ImageBorder, ConversionFactor);
     
     %Calc Assymetry
-    %[Circ, maxPercentOverlap, deltaPerimeter] = CalcAssymetry(BorderXY, ImageBorder, Area);
+    [Circ, maxPercentOverlap, deltaPerimeter] = CalcAssymetry(BorderXY, ImageBorder, Area);
     
     %Calc Color Variation
     ColorVariation = CalcColorVariation(mole, colormap, ImageBorder);
@@ -105,9 +105,9 @@ for i = 1:length(files)
     dataArray(i).ImageBorder = ImageBorder;
     dataArray(i).Area = AreaPixel;
     dataArray(i).Area = AreaMM;
-    % dataArray(i).Circ = Circ;
-    %dataArray(i).maxPercentOverlap = maxPercentOverlap;
-    %dataArray(i).deltaPerimeter = deltaPerimeter;
+    dataArray(i).Circ = Circ;
+    dataArray(i).maxPercentOverlap = maxPercentOverlap;
+    dataArray(i).deltaPerimeter = deltaPerimeter;
     dataArray(i).ConversionFactor = ConversionFactor;
     dataArray(i).ColorVariation = ColorVariation;
     dataArray(i).MajorAxis = major;
@@ -215,11 +215,6 @@ plot(dataArray(:).deltaPerimeter);
 title('Delta Perimeter');
 xlabel('Images');
 ylabel('Delta Perimeter');
-
-%Color Variation (Kristen)
-%Finding changes between Images, etc.
-
-
 
 %Generate Table here (
 
