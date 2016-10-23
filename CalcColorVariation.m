@@ -42,7 +42,6 @@ rgbImage = ind2rgb(Image, map);
 subplot(2, 2, 1);
 imshow(rgbImage, []);
 title('Original Color Image');
-set(gcf, 'Position', get(0,'Screensize')); % Maximize figure.
 
 redPlane = rgbImage(:, :, 1);
 greenPlane = rgbImage(:, :, 2);
