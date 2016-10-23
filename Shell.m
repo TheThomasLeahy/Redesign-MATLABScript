@@ -83,6 +83,7 @@ for i = 1:length(files)
     title('Border Outline');
     
     %Calc Conversion Factor
+    figure;
     ConversionFactor = CalcConversion(ruler);
     
     %Calc Major and Minor Axis Lengths
